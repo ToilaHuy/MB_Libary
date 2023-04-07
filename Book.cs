@@ -14,15 +14,15 @@ namespace oop
         {
             this.NumberOfPages = NumberOfPages;
         }
-        public override void addItem(int Id, string Category)
+        public override void Add(int Id, string Category)
         {
-            base.addItem(Id, Category);
+            base.Add(Id, Category);
             Console.WriteLine("So trang: ");
             this.NumberOfPages = Int32.Parse(Console.ReadLine());
         }
-        public override void ShowItem()
+        public override void Show()
         {
-            base.ShowItem();
+            base.Show();
             Console.WriteLine("So trang: " + this.NumberOfPages);
             Console.WriteLine("------------------------------*---------------------------");
         }

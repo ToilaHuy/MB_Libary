@@ -15,18 +15,23 @@ namespace oop
             this.RunTime = RunTime;
         }
 
-        public override void addItem(int Id, string Category)
+        public override void Add(int Id, string Category)
         {
-            base.addItem(Id, Category);
+            base.Add(Id, Category);
             Console.WriteLine("Thoi luong:");
             this.RunTime = Console.ReadLine();
         }
-        public override void ShowItem()
+        public override void Show()
         {
-            base.ShowItem();
+            base.Show();
             Console.WriteLine("Thoi luong: " + this.RunTime);
             Console.WriteLine("------------------------------*---------------------------");
         }
-
+        public override void Update(int Id, string Category)
+        {
+            base.Add(Id, Category);
+            Console.WriteLine("Thoi luong:");
+            this.RunTime = Console.ReadLine() != "" ? Console.ReadLine() : this.RunTime;
+        }
     }
 }

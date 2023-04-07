@@ -23,7 +23,7 @@ namespace oop
             this.Status = true;
             this.IdBorrowingHistory = IdBorrowingHistory;
         }
-        public void ShowBorrowingHistory()
+        public void Show()
         {
             checkStatus = this.Status ? "Dang muon" : "Da tra";
             Console.WriteLine("Ma lich su cho muon: " + this.IdBorrowingHistory);

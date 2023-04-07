@@ -29,7 +29,7 @@ namespace oop
             this.Status = Status;
         }
 
-        public virtual void addItem(int Id, string Category)
+        public virtual void Add(int Id, string Category)
         {
             this.Id = Id;
             Console.WriteLine("Tieu de:");
@@ -39,26 +39,36 @@ namespace oop
             this.Category = Category;
             Console.WriteLine("Mo ta:");
             this.Description = Console.ReadLine();
-        l1: try
-            {
-                Console.WriteLine("Ngay phat hanh - YYYY/MM/DD ");
-                this.PublicationDate = DateTime.Parse(Console.ReadLine());
-            }
-            catch
-            {
-                Console.WriteLine("Nhap sai roi");
-                goto l1;
-            }
+            Console.WriteLine("Ngay phat hanh - YYYY/MM/DD ");
+            this.PublicationDate = DateTime.Parse(Console.ReadLine());
             this.Status = true;
         }
-        public virtual void ShowItem()
+        public virtual void Show()
         {
-            Console.WriteLine("Ma san pham: " + this.Id);
-            Console.WriteLine("Tieu de: " + this.Title);
-            Console.WriteLine("Ten tac gia: " + this.Author);
-            Console.WriteLine("Loai san pham: " + this.Category);
-            Console.WriteLine("Mo ta: " + this.Description);
-            Console.WriteLine("Ngay phat hanh: " + this.PublicationDate.ToString("dd/MM/yyyy"));
+            Console.WriteLine("Ma san pham: " + Id);
+            Console.WriteLine("Tieu de: " + Title);
+            Console.WriteLine("Ten tac gia: " + Author);
+            Console.WriteLine("Loai san pham: " + Category);
+            Console.WriteLine("Mo ta: " + Description);
+            Console.WriteLine("Ngay phat hanh: " + PublicationDate.ToString("dd/MM/yyyy"));
+        }
+        public virtual void Update(int Id, string Category)
+        {
+            this.Id = Id;
+            Console.WriteLine("Tieu de:");
+            string inputTitle = Console.ReadLine();
+            this.Title = inputTitle?.Length > 0 ? inputTitle : this.Title;
+            Console.WriteLine("Ten tac gia:");
+            string inputAuthor = Console.ReadLine();
+            this.Author = inputAuthor != "" ? inputAuthor : this.Author;
+            this.Category = Category;
+            Console.WriteLine("Mo ta:");
+            string inputDescription = Console.ReadLine();
+            this.Description = inputDescription != "" ? inputDescription : this.Description;
+            Console.WriteLine("Ngay phat hanh - YYYY/MM/DD ");
+            string inputDate = Console.ReadLine();
+            this.PublicationDate = DateTime.TryParse(inputDate, out DateTime date) != default ? date : this.PublicationDate;
+            this.Status = true;
         }
     }
 }
