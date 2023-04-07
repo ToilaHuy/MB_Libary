@@ -17,5 +17,12 @@ namespace oop
             Address = address;
             LibraryCardNumber = libraryCardNumber;
         }
+        public void showBorrower()
+        {
+            Console.WriteLine("Ma nguoi dung: " + this.LibraryCardNumber);
+            Console.WriteLine("Ten nguoi  dung: " + this.Name);
+            Console.WriteLine("Dia chi: " + this.Address);
+
+        }
     }
 }

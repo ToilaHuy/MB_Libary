@@ -32,6 +32,10 @@ public class ListItem
         Console.WriteLine("6 : Muon item");
         Console.WriteLine("7 : Tra item");
         Console.WriteLine("8 : In ra lich su muon item");
+        Console.WriteLine("9 : In ra lich su muon item theo the thanh vien");
+        Console.WriteLine("10 : In ra danh sach thanh vien");
+
+
 
         string number = Console.ReadLine();
         CheckNumber(number);
@@ -49,6 +53,8 @@ public class ListItem
             case "6": BorrowItem(); break;
             case "7": ReturnItem(); break;
             case "8": ShowBorrowingHistory(); break;
+            case "9": ShowBorrowingHistoryDetails(); break;
+            case "10": ShowBorrower(); break;
         }
     }
     void Callback(string name)
@@ -77,6 +83,9 @@ public class ListItem
                     break;
                 case "CheckItemExistence":
                     CheckItemExistence();
+                    break;
+                case "ShowBorrowingHistoryDetails":
+                    ShowBorrowingHistoryDetails();
                     break;
             }
         }
@@ -118,8 +127,8 @@ public class ListItem
             Callback("BorrowItem");
         }
     l2: Console.WriteLine("Vui long nhap id san pham ban muon muon ");
-        int id = int.Parse(Console.ReadLine());
-        var findItem = listItem.Find(item => item.Id == id);
+        int idItem = int.Parse(Console.ReadLine());
+        var findItem = listItem.Find(item => item.Id == idItem);
         if (findItem == null)
         {
             Console.WriteLine("Id khong dung");
@@ -131,8 +140,8 @@ public class ListItem
             goto l2;
         }
         if (findItem != null) findItem.Status = false;
-
-        borrowingHistory.Add(new BorrowingHistory(borrower[getIndexName].LibraryCardNumber, DateTime.Now, id, "book"));
+        int lastId = borrowingHistory.Count > 0 ? borrowingHistory[^1].IdBorrowingHistory + 1 : 1;
+        borrowingHistory.Add(new BorrowingHistory(borrower[getIndexName].LibraryCardNumber, DateTime.Now, idItem, "book", lastId));
         Console.WriteLine("Muon thanh cong");
         StartProject();
     }
@@ -163,7 +172,7 @@ public class ListItem
     {
         Console.WriteLine("Vui long chon loai item ban muon nhap:");
         string number = ChooseCategory();
-        int lastId = listItem[^1].Id + 1;
+        int lastId = listItem[^1].Id > 0 ? listItem[^1].Id + 1 : 1;
         if (number == "1")
         {
             Book item = new();
@@ -201,23 +210,46 @@ public class ListItem
         string answer = Console.ReadLine();
         if (string.Equals(answer, "y", StringComparison.InvariantCultureIgnoreCase)) StartProject();
     }
-    public void ShowBorrowingHistory()
+    public void ShowBorrower()
     {
-        string status;
-        foreach (var item in borrowingHistory)
+        foreach (var item in borrower)
         {
-            status = item.Status ? "Dang muon" : "Da tra";
-            Console.WriteLine("So the thanh vien:" + item.BorrowerLibraryCardNumber);
-            Console.WriteLine("Ngay muon:" + item.BorrowerDate);
-            Console.WriteLine("Ma san pham:" + item.IdItem);
-            Console.WriteLine("Trang thai:" + status);
-            Console.WriteLine("-----------------------------*---------------------");
+            item.showBorrower();
+            Console.WriteLine("-----------------------------------------------");
         }
         Console.WriteLine("Ban muon quay tro lai: y/n");
         string answer = Console.ReadLine();
         if (string.Equals(answer, "y", StringComparison.InvariantCultureIgnoreCase)) StartProject();
     }
+    public void ShowBorrowingHistory()
+    {
+        foreach (var item in borrowingHistory)
+        {
+            item.ShowBorrowingHistory();
+        }
+        Console.WriteLine("Ban muon quay tro lai: y/n");
+        string answer = Console.ReadLine();
+        if (string.Equals(answer, "y", StringComparison.InvariantCultureIgnoreCase)) StartProject();
+    }
+    public void ShowBorrowingHistoryDetails()
+    {
+        Console.WriteLine("Nhap ma so the thanh vien: ");
+        int answer = int.Parse(Console.ReadLine());
+        var listItems = borrowingHistory.FindAll(x => x.BorrowerLibraryCardNumber == answer);
+        var user = borrower.Find(x => x.LibraryCardNumber == answer);
+        string CheckDate = listItems.Count > 0 ? listItems[^1].BorrowerDate.ToString("dd/MM/yyyy") : "Chua muon lan nao";
+        user.showBorrower();
+        Console.WriteLine("So lan muon: " + listItems.Count);
+        Console.WriteLine("Lan muon gan nhat: " + CheckDate);
+        Console.WriteLine("-----------------------------*---------------------");
+        foreach (var item in listItems)
+        {
+            item.ShowBorrowingHistory();
+        }
 
+        Callback("ShowBorrowingHistoryDetails");
+
+    }
     public void CheckItemExistence()
     {
         Console.WriteLine("Ban muon kiem tra item, vui long nhap id:");
