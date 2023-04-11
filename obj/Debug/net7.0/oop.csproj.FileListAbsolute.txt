@@ -13,3 +13,6 @@ E:\hoc\oop\obj\Debug\net7.0\refint\oop.dll
 E:\hoc\oop\obj\Debug\net7.0\oop.pdb
 E:\hoc\oop\obj\Debug\net7.0\oop.genruntimeconfig.cache
 E:\hoc\oop\obj\Debug\net7.0\ref\oop.dll
+E:\hoc\oop\bin\Debug\net7.0\Microsoft.Extensions.DependencyInjection.dll
+E:\hoc\oop\bin\Debug\net7.0\Microsoft.Extensions.DependencyInjection.Abstractions.dll
+E:\hoc\oop\obj\Debug\net7.0\oop.csproj.CopyComplete

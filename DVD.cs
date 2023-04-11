@@ -15,6 +15,7 @@ namespace oop
             this.RunTime = RunTime;
         }
 
+
         public override void Add(int Id, string Category)
         {
             base.Add(Id, Category);
@@ -33,5 +34,7 @@ namespace oop
             Console.WriteLine("Thoi luong:");
             this.RunTime = Console.ReadLine() != "" ? Console.ReadLine() : this.RunTime;
         }
+
+
     }
 }

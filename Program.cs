@@ -1,4 +1,4 @@
-﻿
+﻿using Microsoft.Extensions.DependencyInjection;
 using System.Runtime.InteropServices;
 using System.IO.Pipes;
 using System.CodeDom.Compiler;
@@ -8,7 +8,19 @@ using System;
 // See https://aka.ms/new-console-template for more information
 using oop;
 
-ListItem listItem = new();
+
+
+var listItemDefault = new Item[]{
+            new Book(1, "sach", "huy", "book", "sach hay", DateTime.Parse("2012/12/5"), 100),
+            new Book(2, "harry", "huy", "book", "sach hay", DateTime.Parse("2013/1/5"), 100),
+            new Book(3, "may bay", "huy", "book", "sach hay", DateTime.Parse("2012/5/5"), 100),
+            new DVD(4, "khim binh mai", "huy", "dvd", "sach hay", DateTime.Parse("2020/12/5"),"30p"),
+            new DVD(5, "harry", "huy", "dvd", "sach hay", DateTime.Parse("2022/2/3"),"1h"),
+            new DVD(6, "may bay", "huy", "dvd", "sach hay", DateTime.Parse("2020/3/20"), "20p"),
+         };
+
+// var serviceprovider = services.BuildServiceProvider();
+ListItem listItem = new(listItemDefault);
 ListBorrow listBorrow = new();
 
 listBorrow.AddListItem(listItem);
@@ -30,6 +42,10 @@ bool StartProject()
         Console.WriteLine("10 : In ra danh sach thanh vien");
         Console.WriteLine("11 : Them Thanh vien");
         Console.WriteLine("12 : Sua thanh vien");
+        Console.WriteLine("13 : In ra danh sach sach");
+        Console.WriteLine("14 : Dem so luong dvd co nam phat hanh la 2022");
+        Console.WriteLine("15 : In ra danh sach cac nguoi dung vua muon dvd va sach ");
+
 
 
 
@@ -48,6 +64,11 @@ bool StartProject()
             case "10": listBorrow.ShowBorrower(); break;
             case "11": listBorrow.AddBorrower(); break;
             case "12": listBorrow.UpdateBorrower(); break;
+            case "13": listItem.ShowBook(); break;
+            case "14": listItem.CountDVD(); break;
+            case "15": listBorrow.ShowListBorrowingBookAndDvd(); break;
+
+
         }
     }
 }

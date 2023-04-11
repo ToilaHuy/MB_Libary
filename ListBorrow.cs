@@ -7,6 +7,7 @@ namespace oop;
 
 public class ListBorrow
 {
+
     protected List<BorrowingHistory> borrowingHistory = new();
     protected List<Borrower> borrower = new();
     protected List<Item> ListItem { get; set; }
@@ -24,15 +25,20 @@ public class ListBorrow
         this.ListItem = item.GetItems();
     }
 
+    private static void ShowMessage(string message)
+    {
+        Console.WriteLine(message);
+        Console.WriteLine("Nhan phim bat ki de thoat");
+        Console.ReadKey();
+    }
+
     public void AddBorrower()
     {
         int lastId = borrower[borrower.Count - 1].LibraryCardNumber > 0 ? borrower[borrower.Count - 1].LibraryCardNumber + 1 : 1;
         Borrower user = new();
         user.Add(lastId);
         borrower.Add(user);
-        Console.WriteLine("Them thanh cong");
-        Console.WriteLine("Nhan phim bat ki de thoat");
-        Console.ReadKey();
+        ShowMessage("Them thanh cong");
     }
     public void UpdateBorrower()
     {
@@ -61,9 +67,7 @@ public class ListBorrow
             updateItem.Show();
             updateItem.Update(updateItem.LibraryCardNumber);
         }
-        Console.WriteLine("Sua thanh cong");
-        Console.WriteLine("Nhan phim bat ki de thoat");
-        Console.ReadKey();
+        ShowMessage("Sua thanh cong");
     }
     public void ShowBorrower()
     {
@@ -74,7 +78,6 @@ public class ListBorrow
         }
         Console.WriteLine("Ban muon quay tro lai: y/n");
         string answer = Console.ReadLine();
-
     }
     public void BorrowItem()
     {
@@ -113,9 +116,9 @@ public class ListBorrow
             findItem.Status = false;
 
             borrowingHistory.Add(new BorrowingHistory(checkUser.LibraryCardNumber, DateTime.Now, findItem.Id, findItem.Category, lastId));
-            Console.WriteLine("Muon thanh cong");
-            Console.WriteLine("nhap phim bat ki de thoat");
-            Console.ReadKey();
+
+            ShowMessage("Muon thanh cong");
+
         }
         else
         {
@@ -128,7 +131,8 @@ public class ListBorrow
             }
             if (item != null) item.Status = false;
             borrowingHistory.Add(new BorrowingHistory(checkUser.LibraryCardNumber, DateTime.Now, item.Id, item.Category, lastId));
-            Console.WriteLine("Muon thanh cong");
+            ShowMessage("Muon thanh cong");
+
         }
     }
 
@@ -142,7 +146,8 @@ public class ListBorrow
         itemHistory.Status = false;
         var findItem = ListItem.Find(item => item.Id == itemHistory.IdItem);
         if (findItem != null) findItem.Status = true;
-        Console.WriteLine("Tra thanh cong");
+        ShowMessage("Tra thanh cong");
+
         // StartProject();
     }
 
@@ -171,6 +176,24 @@ public class ListBorrow
         {
             item.Show();
         }
+    }
+    public void ShowListBorrowingBookAndDvd()
+    {
+        var listUser = from user in borrower
+                       join historyBook in from history in borrowingHistory
+                                           where history.Category == "book"
+                                           select history
+                       on user.LibraryCardNumber equals historyBook.BorrowerLibraryCardNumber
+                       join historyDvd in from history in borrowingHistory
+                                          where history.Category == "dvd"
+                                          select history
+                       on user.LibraryCardNumber equals historyDvd.BorrowerLibraryCardNumber
+                       select user;
+        foreach (var item in listUser.Distinct())
+        {
+            item.Show();
+        }
+        ShowMessage("");
     }
 
 }

@@ -2,25 +2,15 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-
+using System.Collections.Generic;
+using System.Linq;
 namespace oop;
 
 public class ListItem
 {
     protected List<Item> listItem = new();
-
-    public ListItem()
+    public ListItem(Item[] listItemDefault)
     {
-
-        var listItemDefault = new Item[]{
-            new Book(1, "sach", "huy", "book", "sach hay", DateTime.Parse("2012/12/5"), 100),
-            new Book(2, "harry", "huy", "book", "sach hay", DateTime.Parse("2013/1/5"), 100),
-            new Book(3, "may bay", "huy", "book", "sach hay", DateTime.Parse("2012/5/5"), 100),
-            new DVD(4, "khim binh mai", "huy", "dvd", "sach hay", DateTime.Parse("2020/12/5"),"30p"),
-            new DVD(5, "harry", "huy", "dvd", "sach hay", DateTime.Parse("2020/2/3"),"1h"),
-            new DVD(6, "may bay", "huy", "dvd", "sach hay", DateTime.Parse("2020/3/20"), "20p"),
-         };
-
         listItem.AddRange(listItemDefault);
     }
     public List<Item> GetItems()
@@ -58,6 +48,12 @@ public class ListItem
         Console.ReadKey();
 
     }
+    private static void ShowMessage(string message)
+    {
+        Console.WriteLine(message);
+        Console.WriteLine("Nhan phim bat ki de thoat");
+        Console.ReadKey();
+    }
 
     public void AddItem()
     {
@@ -73,18 +69,14 @@ public class ListItem
             Book item = new();
             item.Add(lastId, "book");
             listItem.Add(item);
-            Console.WriteLine("Them thanh cong");
-            Console.WriteLine("Nhan phim bat ki de thoat");
-            Console.ReadKey();
+            ShowMessage("Them thanh cong");
         }
         else if (number == "2")
         {
             Item item = new DVD();
             item.Add(lastId, "dvd");
             listItem.Add(item);
-            Console.WriteLine("Them thanh cong");
-            Console.WriteLine("Nhan phim bat ki de thoat");
-            Console.ReadKey();
+            ShowMessage("Them thanh cong");
         }
         else if (number == "3")
         {
@@ -97,8 +89,7 @@ public class ListItem
         {
             if (item.Status) item.Show();
         });
-        Console.WriteLine("Nhan phim bat ki de thoat");
-        Console.ReadKey();
+        ShowMessage("");
     }
     public void CheckItemExistence()
     {
@@ -111,14 +102,13 @@ public class ListItem
             if (checkItem.Count == 0)
             {
                 Console.Clear();
-                Console.WriteLine("Khong tim thay san pham nao");
-                Console.WriteLine("Nhan phim bat ki de thoat");
-                Console.ReadKey();
+
+                ShowMessage("Khong tim thay san pham nao");
+
                 break;
             }
             checkItem.ForEach(item => item.Show());
-            Console.WriteLine("Nhan phim bat ki de thoat");
-            Console.ReadKey();
+            ShowMessage("");
             break;
         }
     }
@@ -158,8 +148,31 @@ public class ListItem
             updateItem.Show();
             updateItem.Update(updateItem.Id, updateItem.Category);
         }
-        Console.WriteLine("Sua thanh cong");
-        Console.WriteLine("Nhan phim bat ki de thoat");
-        Console.ReadKey();
+        ShowMessage("Sua thanh cong");
+    }
+
+    public void ShowBook()
+    {
+        var listBook = listItem.Where(book => book.Category == "book").ToList();
+        // var listBookQuery = from item in listItem where item.Category == "book" select item;
+        listBook.ForEach(x => x.Show());
+        Console.WriteLine("Ban co muon sap xep danh sach khong? Y/N");
+        string answer = Console.ReadLine();
+        if (string.Equals(answer, "y", StringComparison.OrdinalIgnoreCase))
+        {
+            Console.Clear();
+            listBook.OrderByDescending(x => x.Title).ToList().ForEach(x => x.Show());
+        }
+        ShowMessage("");
+    }
+
+    public void CountDVD()
+    {
+        // var countDvd = from item in listItem
+        //                where item.Category == "dvd" && item.PublicationDate.Year == 2022
+        //                select item;
+        var countDvd = listItem.Count(x => x.Category == "dvd" && x.PublicationDate.Year == 2022);
+        Console.WriteLine("So luong san pham dvd co nam phat hanh la 2022: " + countDvd);
+        ShowMessage("");
     }
 }
