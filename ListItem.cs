@@ -9,8 +9,16 @@ namespace oop;
 public class ListItem
 {
     protected List<Item> listItem = new();
-    public ListItem(Item[] listItemDefault)
+    public ListItem()
     {
+        var listItemDefault = new Item[]{
+            new Book(1, "sach", "huy", "book", "sach hay", DateTime.Parse("2012/12/5"), 100),
+            new Book(2, "harry", "huy", "book", "sach hay", DateTime.Parse("2013/1/5"), 100),
+            new Book(3, "may bay", "huy", "book", "sach hay", DateTime.Parse("2012/5/5"), 100),
+            new DVD(4, "sieu nhan gao", "huy", "dvd", "sach hay", DateTime.Parse("2020/12/5"),"30p"),
+            new DVD(5, "harry", "huy", "dvd", "sach hay", DateTime.Parse("2022/2/3"),"1h"),
+            new DVD(6, "may bay", "huy", "dvd", "sach hay", DateTime.Parse("2020/3/20"), "20p"),
+         };
         listItem.AddRange(listItemDefault);
     }
     public List<Item> GetItems()

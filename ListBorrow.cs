@@ -116,9 +116,7 @@ public class ListBorrow
             findItem.Status = false;
 
             borrowingHistory.Add(new BorrowingHistory(checkUser.LibraryCardNumber, DateTime.Now, findItem.Id, findItem.Category, lastId));
-
             ShowMessage("Muon thanh cong");
-
         }
         else
         {
@@ -127,12 +125,10 @@ public class ListBorrow
             {
                 Console.WriteLine("San pham khong con trong kho");
                 return;
-
             }
             if (item != null) item.Status = false;
             borrowingHistory.Add(new BorrowingHistory(checkUser.LibraryCardNumber, DateTime.Now, item.Id, item.Category, lastId));
             ShowMessage("Muon thanh cong");
-
         }
     }
 
